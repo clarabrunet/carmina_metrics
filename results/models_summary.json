@@ -1,0 +1,38 @@
+[
+  {
+    "Model": "claude-4.5-haiku",
+    "Docs": 1481,
+    "Identity_Precision": 0.9118,
+    "Identity_Recall": 0.9332,
+    "Identity_F1": 0.9224,
+    "Category_F1": 0.9339,
+    "Combined_F1": 0.8614
+  },
+  {
+    "Model": "claude-4.5-opus",
+    "Docs": 1481,
+    "Identity_Precision": 0.9483,
+    "Identity_Recall": 0.953,
+    "Identity_F1": 0.9506,
+    "Category_F1": 0.9561,
+    "Combined_F1": 0.9089
+  },
+  {
+    "Model": "claude-4.5-sonnet",
+    "Docs": 1481,
+    "Identity_Precision": 0.9444,
+    "Identity_Recall": 0.9499,
+    "Identity_F1": 0.9471,
+    "Category_F1": 0.9672,
+    "Combined_F1": 0.9161
+  },
+  {
+    "Model": "llama-3.3-70b",
+    "Docs": 1481,
+    "Identity_Precision": 0.3631,
+    "Identity_Recall": 0.9085,
+    "Identity_F1": 0.5189,
+    "Category_F1": 0.8406,
+    "Combined_F1": 0.4362
+  }
+]

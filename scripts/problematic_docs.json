@@ -1,0 +1,536 @@
+[
+  {
+    "namefile": "CARMEN-I_IA_EVOL_94.txt",
+    "total_labels": 49,
+    "issues_count": 37,
+    "issues": [
+      "FRAGMENT: '2'",
+      "MASKING: '01/0[**3'",
+      "FRAGMENT: '2'",
+      "FRAGMENT: '2'",
+      "FRAGMENT: '2'",
+      "FRAGMENT: '3'",
+      "FRAGMENT: '3'",
+      "FRAGMENT: '4'",
+      "FRAGMENT: '4'",
+      "FRAGMENT: '2'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_ANTECEDENTES_138.txt",
+    "total_labels": 32,
+    "issues_count": 16,
+    "issues": [
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_ANTECEDENTES_79.txt",
+    "total_labels": 32,
+    "issues_count": 8,
+    "issues": [
+      "MASKING: '02/[**07'",
+      "FRAGMENT: '10'",
+      "FRAGMENT: '07'",
+      "FRAGMENT: '22'",
+      "FRAGMENT: '29'",
+      "FRAGMENT: '22'",
+      "FRAGMENT: '22'",
+      "FRAGMENT: '22'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_PROCESO_ACTUAL_34.txt",
+    "total_labels": 21,
+    "issues_count": 7,
+    "issues": [
+      "FRAGMENT: '19'",
+      "FRAGMENT: '19'",
+      "FRAGMENT: '19'",
+      "FRAGMENT: '19'",
+      "FRAGMENT: '19'",
+      "FRAGMENT: '21'",
+      "FRAGMENT: '23'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_55.txt",
+    "total_labels": 13,
+    "issues_count": 6,
+    "issues": [
+      "FRAGMENT: '10'",
+      "FRAGMENT: '12'",
+      "FRAGMENT: '10'",
+      "FRAGMENT: '12'",
+      "FRAGMENT: '10'",
+      "FRAGMENT: '12'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_ANTECEDENTES_102.txt",
+    "total_labels": 25,
+    "issues_count": 5,
+    "issues": [
+      "FRAGMENT: '10'",
+      "FRAGMENT: '10'",
+      "FRAGMENT: '10'",
+      "FRAGMENT: '10'",
+      "FRAGMENT: '10'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IT_EVOL_3.txt",
+    "total_labels": 22,
+    "issues_count": 5,
+    "issues": [
+      "FRAGMENT: '7'",
+      "FRAGMENT: '7'",
+      "FRAGMENT: '7'",
+      "FRAGMENT: '7'",
+      "FRAGMENT: '7'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_102.txt",
+    "total_labels": 15,
+    "issues_count": 4,
+    "issues": [
+      "FRAGMENT: '21'",
+      "FRAGMENT: '21'",
+      "FRAGMENT: '26'",
+      "FRAGMENT: '21'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_17.txt",
+    "total_labels": 10,
+    "issues_count": 4,
+    "issues": [
+      "FRAGMENT: '2'",
+      "FRAGMENT: '3'",
+      "FRAGMENT: '2'",
+      "FRAGMENT: '3'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_41.txt",
+    "total_labels": 17,
+    "issues_count": 4,
+    "issues": [
+      "FRAGMENT: '14'",
+      "FRAGMENT: '14'",
+      "FRAGMENT: '14'",
+      "FRAGMENT: '14'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_ANTECEDENTES_44.txt",
+    "total_labels": 21,
+    "issues_count": 3,
+    "issues": [
+      "FRAGMENT: '22'",
+      "FRAGMENT: '22'",
+      "FRAGMENT: '22'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EXPLORACION_COMPLEMENTARIA_19.txt",
+    "total_labels": 8,
+    "issues_count": 3,
+    "issues": [
+      "FRAGMENT: '5'",
+      "FRAGMENT: '5'",
+      "FRAGMENT: '5'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_PROCESO_ACTUAL_7.txt",
+    "total_labels": 16,
+    "issues_count": 3,
+    "issues": [
+      "FRAGMENT: '02'",
+      "FRAGMENT: '02'",
+      "FRAGMENT: '02'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_729.txt",
+    "total_labels": 41,
+    "issues_count": 3,
+    "issues": [
+      "FRAGMENT: '57'",
+      "FRAGMENT: '19'",
+      "FRAGMENT: '19'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_ANTECEDENTES_86.txt",
+    "total_labels": 21,
+    "issues_count": 2,
+    "issues": [
+      "FRAGMENT: '50'",
+      "FRAGMENT: '50'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_112.txt",
+    "total_labels": 7,
+    "issues_count": 2,
+    "issues": [
+      "FRAGMENT: '17'",
+      "FRAGMENT: '17'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_124.txt",
+    "total_labels": 6,
+    "issues_count": 2,
+    "issues": [
+      "FRAGMENT: '30'",
+      "FRAGMENT: '30'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_130.txt",
+    "total_labels": 14,
+    "issues_count": 2,
+    "issues": [
+      "FRAGMENT: '23'",
+      "FRAGMENT: '23'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_28.txt",
+    "total_labels": 5,
+    "issues_count": 2,
+    "issues": [
+      "FRAGMENT: '18'",
+      "FRAGMENT: '18'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_216.txt",
+    "total_labels": 3,
+    "issues_count": 2,
+    "issues": [
+      "FRAGMENT: '16'",
+      "FRAGMENT: '18'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_580.txt",
+    "total_labels": 4,
+    "issues_count": 2,
+    "issues": [
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IT_EVOL_5.txt",
+    "total_labels": 7,
+    "issues_count": 2,
+    "issues": [
+      "FRAGMENT: '16'",
+      "FRAGMENT: '17'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IT_PROCESO_ACTUAL_24.txt",
+    "total_labels": 12,
+    "issues_count": 2,
+    "issues": [
+      "FRAGMENT: '20'",
+      "FRAGMENT: '20'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_CC_4.txt",
+    "total_labels": 19,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '34'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_ANTECEDENTES_124.txt",
+    "total_labels": 20,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '22'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_ANTECEDENTES_4.txt",
+    "total_labels": 9,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '11'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_ANTECEDENTES_7.txt",
+    "total_labels": 17,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '51'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_ANTECEDENTES_70.txt",
+    "total_labels": 7,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '13'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_128.txt",
+    "total_labels": 9,
+    "issues_count": 1,
+    "issues": [
+      "MASKING: '0[**5/08'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_131.txt",
+    "total_labels": 13,
+    "issues_count": 1,
+    "issues": [
+      "MASKING: '2[**1/08'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_140.txt",
+    "total_labels": 20,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '26'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_43.txt",
+    "total_labels": 14,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '11'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_81.txt",
+    "total_labels": 16,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '03'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EVOL_92.txt",
+    "total_labels": 23,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '11'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EXPLORACION_CLINICA_12.txt",
+    "total_labels": 4,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '10'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_EXPLORACION_COMPLEMENTARIA_21.txt",
+    "total_labels": 18,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '04'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_PROCESO_ACTUAL_18.txt",
+    "total_labels": 2,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '23'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_PROCESO_ACTUAL_30.txt",
+    "total_labels": 5,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '26'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_PROCESO_ACTUAL_39.txt",
+    "total_labels": 4,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '12'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_PROCESO_ACTUAL_61.txt",
+    "total_labels": 28,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '29'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_PROCESO_ACTUAL_72.txt",
+    "total_labels": 5,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '15'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_PROCESO_ACTUAL_77.txt",
+    "total_labels": 7,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '24'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_PROCESO_ACTUAL_85.txt",
+    "total_labels": 5,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '13'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IA_SEGUIMIENTO_9.txt",
+    "total_labels": 5,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '15'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_161.txt",
+    "total_labels": 1,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '35'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_202.txt",
+    "total_labels": 3,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '68'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_254.txt",
+    "total_labels": 2,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '32'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_744.txt",
+    "total_labels": 8,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '9'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_761.txt",
+    "total_labels": 3,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '48'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_850.txt",
+    "total_labels": 4,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '66'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_86.txt",
+    "total_labels": 4,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '76'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_937.txt",
+    "total_labels": 1,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '38'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IR_985.txt",
+    "total_labels": 2,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '14'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IT_ANTECEDENTES_2.txt",
+    "total_labels": 35,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '26'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IT_PLAN_TERAPEUTICO_1.txt",
+    "total_labels": 4,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '22'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IT_PROCESO_ACTUAL_28.txt",
+    "total_labels": 7,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '22'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IT_PROCESO_ACTUAL_36.txt",
+    "total_labels": 9,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '31'"
+    ]
+  },
+  {
+    "namefile": "CARMEN-I_IT_PROCESO_ACTUAL_52.txt",
+    "total_labels": 1,
+    "issues_count": 1,
+    "issues": [
+      "FRAGMENT: '15'"
+    ]
+  }
+]

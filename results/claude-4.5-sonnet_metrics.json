@@ -1,0 +1,38 @@
+{
+  "model_name": "claude-4.5-sonnet",
+  "metrics": {
+    "documents_evaluated": 1481,
+    "documents_without_gt": 461,
+    "include_empty_gt": false,
+    "identity": {
+      "tp": 7112,
+      "fp": 419,
+      "fn": 375,
+      "df": 408,
+      "precision": 0.9444,
+      "recall": 0.9499,
+      "f1": 0.9471,
+      "accuracy": 0.8996
+    },
+    "category": {
+      "tp": 6879,
+      "fp": 233,
+      "fn": 233,
+      "df": 0,
+      "precision": 0.9672,
+      "recall": 0.9672,
+      "f1": 0.9672,
+      "accuracy": 0.9366
+    },
+    "combined": {
+      "tp": 6879,
+      "fp": 652,
+      "fn": 608,
+      "df": 0,
+      "precision": 0.9134,
+      "recall": 0.9188,
+      "f1": 0.9161,
+      "accuracy": 0.8452
+    }
+  }
+}
