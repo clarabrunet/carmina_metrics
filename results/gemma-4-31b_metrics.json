@@ -1,0 +1,397 @@
+{
+  "model_name": "gemma-4-31b",
+  "matching_config": {
+    "normalize_case": true,
+    "partial_match": true
+  },
+  "counts": {
+    "total": 2000,
+    "excluded": 58,
+    "no_gt": 461,
+    "evaluated": 1942,
+    "length_mismatches": 0,
+    "anon_text_missing": 0
+  },
+  "global": {
+    "m1": {
+      "tp": 7265,
+      "fp": 743,
+      "fn": 231,
+      "partial": 390,
+      "precision": 0.9072,
+      "recall": 0.9692,
+      "f1": 0.9372
+    },
+    "m2": {
+      "tp": 7024,
+      "fp": 241,
+      "fn": 241,
+      "partial": 0,
+      "precision": 0.9668,
+      "recall": 0.9668,
+      "f1": 0.9668
+    },
+    "m3": {
+      "tp": 7025,
+      "fp": 983,
+      "fn": 471,
+      "partial": 0,
+      "precision": 0.8772,
+      "recall": 0.9372,
+      "f1": 0.9062
+    },
+    "m2_confusion": {
+      "classes": [
+        "CALLE",
+        "CENTRO_SALUD",
+        "DIREC_PROT_INTERNET",
+        "EDAD_SUJETO_ASISTENCIA",
+        "FAMILIARES_SUJETO_ASISTENCIA",
+        "FECHAS",
+        "HOSPITAL",
+        "IDENTIF_DISPOSITIVOS_NRSERIE",
+        "ID_CONTACTO_ASISTENCIAL",
+        "ID_SUJETO_ASISTENCIA",
+        "INSTITUCION",
+        "NOMBRE_PERSONAL_SANITARIO",
+        "NOMBRE_SUJETO_ASISTENCIA",
+        "NUMERO_IDENTIF",
+        "NUMERO_TELEFONO",
+        "OTROS_SUJETO_ASISTENCIA",
+        "PAIS",
+        "PROFESION",
+        "SEXO_SUJETO_ASISTENCIA",
+        "TERRITORIO",
+        "URL_WEB"
+      ],
+      "matrix": {
+        "PROFESION": {
+          "PROFESION": 77,
+          "OTROS_SUJETO_ASISTENCIA": 4
+        },
+        "FAMILIARES_SUJETO_ASISTENCIA": {
+          "FAMILIARES_SUJETO_ASISTENCIA": 277,
+          "TERRITORIO": 2,
+          "SEXO_SUJETO_ASISTENCIA": 1
+        },
+        "FECHAS": {
+          "FECHAS": 4785,
+          "NUMERO_IDENTIF": 6,
+          "HOSPITAL": 1
+        },
+        "NUMERO_TELEFONO": {
+          "NUMERO_TELEFONO": 17,
+          "NUMERO_IDENTIF": 2
+        },
+        "INSTITUCION": {
+          "CENTRO_SALUD": 46,
+          "HOSPITAL": 43,
+          "INSTITUCION": 11,
+          "OTROS_SUJETO_ASISTENCIA": 1
+        },
+        "NUMERO_IDENTIF": {
+          "NUMERO_IDENTIF": 59,
+          "IDENTIF_DISPOSITIVOS_NRSERIE": 1,
+          "HOSPITAL": 16,
+          "ID_CONTACTO_ASISTENCIAL": 11,
+          "CALLE": 1,
+          "FECHAS": 1,
+          "NUMERO_TELEFONO": 1,
+          "ID_SUJETO_ASISTENCIA": 1,
+          "NOMBRE_PERSONAL_SANITARIO": 1,
+          "INSTITUCION": 1
+        },
+        "SEXO_SUJETO_ASISTENCIA": {
+          "SEXO_SUJETO_ASISTENCIA": 418,
+          "FAMILIARES_SUJETO_ASISTENCIA": 2,
+          "NOMBRE_SUJETO_ASISTENCIA": 6
+        },
+        "EDAD_SUJETO_ASISTENCIA": {
+          "EDAD_SUJETO_ASISTENCIA": 775,
+          "CALLE": 1,
+          "ID_CONTACTO_ASISTENCIAL": 1,
+          "FAMILIARES_SUJETO_ASISTENCIA": 1,
+          "NUMERO_IDENTIF": 2,
+          "OTROS_SUJETO_ASISTENCIA": 1,
+          "ID_SUJETO_ASISTENCIA": 1
+        },
+        "HOSPITAL": {
+          "CENTRO_SALUD": 50,
+          "HOSPITAL": 237,
+          "TERRITORIO": 3,
+          "NUMERO_IDENTIF": 3
+        },
+        "PAIS": {
+          "PAIS": 88,
+          "TERRITORIO": 13,
+          "ID_SUJETO_ASISTENCIA": 1,
+          "HOSPITAL": 2
+        },
+        "TERRITORIO": {
+          "TERRITORIO": 63,
+          "NOMBRE_PERSONAL_SANITARIO": 2,
+          "PROFESION": 1,
+          "CENTRO_SALUD": 1
+        },
+        "NOMBRE_PERSONAL_SANITARIO": {
+          "NOMBRE_PERSONAL_SANITARIO": 144,
+          "TERRITORIO": 1
+        },
+        "ID_SUJETO_ASISTENCIA": {
+          "ID_SUJETO_ASISTENCIA": 11
+        },
+        "CENTRO_SALUD": {
+          "CENTRO_SALUD": 42,
+          "INSTITUCION": 7
+        },
+        "CALLE": {
+          "CALLE": 20
+        },
+        "OTROS_SUJETO_ASISTENCIA": {
+          "ID_SUJETO_ASISTENCIA": 1
+        },
+        "URL_WEB": {
+          "DIREC_PROT_INTERNET": 1
+        }
+      },
+      "per_class": {
+        "CALLE": {
+          "tp": 20,
+          "fp": 2,
+          "fn": 0,
+          "tn": 7243,
+          "precision": 0.9091,
+          "recall": 1.0,
+          "f1": 0.9524,
+          "support": 20
+        },
+        "CENTRO_SALUD": {
+          "tp": 42,
+          "fp": 97,
+          "fn": 7,
+          "tn": 7119,
+          "precision": 0.3022,
+          "recall": 0.8571,
+          "f1": 0.4468,
+          "support": 49
+        },
+        "DIREC_PROT_INTERNET": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0,
+          "tn": 7264,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "EDAD_SUJETO_ASISTENCIA": {
+          "tp": 775,
+          "fp": 0,
+          "fn": 7,
+          "tn": 6483,
+          "precision": 1.0,
+          "recall": 0.991,
+          "f1": 0.9955,
+          "support": 782
+        },
+        "FAMILIARES_SUJETO_ASISTENCIA": {
+          "tp": 277,
+          "fp": 3,
+          "fn": 3,
+          "tn": 6982,
+          "precision": 0.9893,
+          "recall": 0.9893,
+          "f1": 0.9893,
+          "support": 280
+        },
+        "FECHAS": {
+          "tp": 4785,
+          "fp": 1,
+          "fn": 7,
+          "tn": 2472,
+          "precision": 0.9998,
+          "recall": 0.9985,
+          "f1": 0.9992,
+          "support": 4792
+        },
+        "HOSPITAL": {
+          "tp": 237,
+          "fp": 62,
+          "fn": 56,
+          "tn": 6910,
+          "precision": 0.7926,
+          "recall": 0.8089,
+          "f1": 0.8007,
+          "support": 293
+        },
+        "IDENTIF_DISPOSITIVOS_NRSERIE": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0,
+          "tn": 7264,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "ID_CONTACTO_ASISTENCIAL": {
+          "tp": 0,
+          "fp": 12,
+          "fn": 0,
+          "tn": 7253,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "ID_SUJETO_ASISTENCIA": {
+          "tp": 11,
+          "fp": 4,
+          "fn": 0,
+          "tn": 7250,
+          "precision": 0.7333,
+          "recall": 1.0,
+          "f1": 0.8462,
+          "support": 11
+        },
+        "INSTITUCION": {
+          "tp": 11,
+          "fp": 8,
+          "fn": 90,
+          "tn": 7156,
+          "precision": 0.5789,
+          "recall": 0.1089,
+          "f1": 0.1833,
+          "support": 101
+        },
+        "NOMBRE_PERSONAL_SANITARIO": {
+          "tp": 144,
+          "fp": 3,
+          "fn": 1,
+          "tn": 7117,
+          "precision": 0.9796,
+          "recall": 0.9931,
+          "f1": 0.9863,
+          "support": 145
+        },
+        "NOMBRE_SUJETO_ASISTENCIA": {
+          "tp": 0,
+          "fp": 6,
+          "fn": 0,
+          "tn": 7259,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "NUMERO_IDENTIF": {
+          "tp": 59,
+          "fp": 13,
+          "fn": 34,
+          "tn": 7159,
+          "precision": 0.8194,
+          "recall": 0.6344,
+          "f1": 0.7152,
+          "support": 93
+        },
+        "NUMERO_TELEFONO": {
+          "tp": 17,
+          "fp": 1,
+          "fn": 2,
+          "tn": 7245,
+          "precision": 0.9444,
+          "recall": 0.8947,
+          "f1": 0.9189,
+          "support": 19
+        },
+        "OTROS_SUJETO_ASISTENCIA": {
+          "tp": 0,
+          "fp": 6,
+          "fn": 1,
+          "tn": 7258,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1
+        },
+        "PAIS": {
+          "tp": 88,
+          "fp": 0,
+          "fn": 16,
+          "tn": 7161,
+          "precision": 1.0,
+          "recall": 0.8462,
+          "f1": 0.9167,
+          "support": 104
+        },
+        "PROFESION": {
+          "tp": 77,
+          "fp": 1,
+          "fn": 4,
+          "tn": 7183,
+          "precision": 0.9872,
+          "recall": 0.9506,
+          "f1": 0.9686,
+          "support": 81
+        },
+        "SEXO_SUJETO_ASISTENCIA": {
+          "tp": 418,
+          "fp": 1,
+          "fn": 8,
+          "tn": 6838,
+          "precision": 0.9976,
+          "recall": 0.9812,
+          "f1": 0.9893,
+          "support": 426
+        },
+        "TERRITORIO": {
+          "tp": 63,
+          "fp": 19,
+          "fn": 4,
+          "tn": 7179,
+          "precision": 0.7683,
+          "recall": 0.9403,
+          "f1": 0.8456,
+          "support": 67
+        },
+        "URL_WEB": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "tn": 7264,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1
+        }
+      },
+      "micro": {
+        "precision": 0.9668,
+        "recall": 0.9668,
+        "f1": 0.9668
+      },
+      "macro": {
+        "precision": 0.6096,
+        "recall": 0.6188,
+        "f1": 0.5978
+      },
+      "weighted": {
+        "precision": 0.9743,
+        "recall": 0.9668,
+        "f1": 0.9671
+      },
+      "sklearn_used": true
+    },
+    "faithfulness_identify_mean": 1.0,
+    "faithfulness_anonymize_mean": 0.9998,
+    "align_phases": {
+      "docs_with_mismatch": 0,
+      "phase0_empty_anchor": 0,
+      "phase1_direct": 0,
+      "phase2_skip": 0,
+      "phase3_unknown": 0,
+      "total_resolved": 0
+    }
+  }
+}
