@@ -760,15 +760,26 @@ Generated in `results/` for each model:
 
 ```json
 {
-  "ca": {
+  "cat": {
     "m1": {"tp": ..., "fp": ..., "fn": ..., "precision": ..., "recall": ..., "f1": ...},
     "m2": {...},
-    "m3": {...}
+    "m3": {...},
+    "m2_confusion": {
+      "classes": [...],
+      "matrix": {...},
+      "per_class": {...},
+      "micro":    {"precision": ..., "recall": ..., "f1": ...},
+      "macro":    {"precision": ..., "recall": ..., "f1": ...},
+      "weighted": {"precision": ..., "recall": ..., "f1": ...},
+      "sklearn_used": true
+    }
   },
-  "ca-es": {...},
+  "bi": {...},
   "es": {...}
 }
 ```
+
+`m2_confusion` per language has the same structure as `global.m2_confusion` in `_metrics.json`, but computed only from M1 TP pairs of documents in that language.
 
 ### `<model>_by_entity_type.json`
 
