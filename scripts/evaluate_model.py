@@ -1011,6 +1011,7 @@ def evaluate_all(
     lang_m1: Dict[str, MetricsResult] = defaultdict(MetricsResult)
     lang_m2: Dict[str, MetricsResult] = defaultdict(MetricsResult)
     lang_m3: Dict[str, MetricsResult] = defaultdict(MetricsResult)
+    lang_m2_cm_pairs: Dict[str, List[Tuple[str, str]]] = defaultdict(list)
 
     document_results = []
     counts = {
@@ -1046,14 +1047,39 @@ def evaluate_all(
         if not gt_entities:
             counts['no_gt'] += 1
             pred_entities, pred_types, _ = extract_predictions(doc)
+            lang = language_map.get(namefile, 'unknown')
             if pred_entities:
                 n = len(pred_entities)
                 global_m1.fp += n
                 global_m3.fp += n
-                lang = language_map.get(namefile, 'unknown')
                 lang_m1[lang].fp += n
                 lang_m3[lang].fp += n
             counts['evaluated'] += 1
+            n_fp = len(pred_entities)
+            document_results.append({
+                'namefile': namefile,
+                'language': lang,
+                'gt_count': 0,
+                'pred_count': n_fp,
+                'm1': MetricsResult(tp=0, fp=n_fp, fn=0, partial=0).to_dict(),
+                'm2': MetricsResult(tp=0, fp=0, fn=0, partial=0).to_dict(),
+                'm3': MetricsResult(tp=0, fp=n_fp, fn=0, partial=0).to_dict(),
+                'length_mismatch': False,
+                'mismatch_detail': '',
+                'align_phase0': 0,
+                'align_phase1': 0,
+                'align_phase2': 0,
+                'align_phase3_unknown': 0,
+                'anon_text_missing': False,
+                'faithfulness_identify': None,
+                'faithfulness_anonymize': None,
+                'gt_entities': [],
+                'gt_types': [],
+                'pred_entities': pred_entities,
+                'pred_types': pred_types,
+                'm2_type_errors': [],
+                'm1_partial_pairs': [],
+            })
             continue
 
         counts['evaluated'] += 1
@@ -1108,6 +1134,8 @@ def evaluate_all(
 
         # Aggregate per-language metrics
         lang = language_map.get(namefile, 'unknown')
+        if not anon_missing:
+            lang_m2_cm_pairs[lang].extend(result['m2_cm_pairs'])
         for attr in ('tp', 'fp', 'fn', 'partial'):
             setattr(lang_m1[lang], attr, getattr(lang_m1[lang], attr) + getattr(result['m1'], attr))
         if not anon_missing:
@@ -1166,6 +1194,7 @@ def evaluate_all(
                 'm1': lang_m1[lang].to_dict(),
                 'm2': lang_m2[lang].to_dict(),
                 'm3': lang_m3[lang].to_dict(),
+                'm2_confusion': _compute_m2_confusion(lang_m2_cm_pairs[lang]),
             }
             for lang in sorted(set(list(lang_m1.keys()) + list(lang_m2.keys()) + list(lang_m3.keys())))
         },
