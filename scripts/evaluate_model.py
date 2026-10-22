@@ -68,6 +68,11 @@ except ImportError:
 # silently ignored.
 _PAT = re.compile(r'\[\*\*((?:(?!\[\*\*|\*\*\]).)*?)\*\*\]', re.DOTALL)
 
+# Regex for the direct-anonymization format: **CATEGORY** (no enclosing brackets).
+# Only matches valid-looking category names (uppercase + underscores) to avoid
+# false positives on markdown bold or other **...** uses in clinical text.
+_PAT_DIRECT = re.compile(r'\*\*([A-Z][A-Z_0-9]*)\*\*')
+
 # Valid category set as defined in labeling.xml.
 # Any predicted type not in this set is normalised to INVALID_CATEGORY
 # so that model-invented labels do not pollute the confusion matrix.
@@ -137,7 +142,7 @@ def _flatten_nested_markers(text: str) -> str:
 class NormalizationConfig:
     """Matching configuration: minimal text normalisation + optional partial match."""
     normalize_case: bool = True       # Always on: strip + lowercase
-    partial_match: bool = False       # Enable second-pass substring matching
+    partial_match: bool = True        # Enable second-pass substring matching
     partial_match_strategy: str = 'substring'  # 'substring' | 'sequence_matcher'
     partial_match_threshold: float = 0.6   # Minimum ratio for sequence_matcher [0, 1]
     partial_match_min_length: int = 3      # Min length on both sides for partial match
@@ -470,6 +475,82 @@ def _compute_m2_confusion(pairs: List[Tuple[str, str]]) -> Dict:
 
 
 # ---------------------------------------------------------------------------
+# Direct-anonymization format support
+# ---------------------------------------------------------------------------
+
+def _recover_entities_from_direct_anon(
+    original_text: str,
+    anonymized_text: str,
+) -> Tuple[List[str], List[str], int]:
+    """
+    Recovers entity texts from a direct-anonymization output.
+
+    The single-step strategy outputs **CATEGORY** markers (no brackets) directly
+    in the anonymized text, with no separate identified_text.  We recover the
+    original entity span for each marker by locating the surrounding text
+    segments from anonymized_text inside original_text and extracting the gaps.
+
+    Algorithm (sequential scan):
+      - Split anonymized_text on _PAT_DIRECT into [seg0, cat0, seg1, cat1, ..., segN].
+      - For each (segI, catI): find segI in original_text starting from the
+        current cursor, then find segI+1 to bound the entity span.
+      - entity_text = original_text[segI_end : segI+1_start].strip()
+      - If either lookup fails, the entity is skipped (n_failed += 1).
+
+    Returns:
+        entities : recovered entity text strings (parallel to types)
+        types    : category strings from the **CATEGORY** markers
+        n_failed : entities whose original text could not be recovered
+    """
+    if not original_text or not anonymized_text:
+        return [], [], 0
+
+    parts = _PAT_DIRECT.split(anonymized_text)
+    text_segments = parts[0::2]   # n_entities + 1 inter-marker segments
+    categories    = parts[1::2]   # n_entities categories
+
+    if not categories:
+        return [], [], 0
+
+    entities: List[str] = []
+    types: List[str] = []
+    n_failed = 0
+    pos = 0  # search cursor in original_text
+
+    for i, (seg, cat) in enumerate(zip(text_segments[:-1], categories)):
+        # Locate the current text segment to find where the entity begins.
+        if seg:
+            idx = original_text.find(seg, pos)
+            if idx == -1:
+                n_failed += 1
+                continue
+            entity_start = idx + len(seg)
+        else:
+            entity_start = pos
+
+        # Locate the next text segment to bound where the entity ends.
+        next_seg = text_segments[i + 1]
+        if next_seg:
+            entity_end = original_text.find(next_seg, entity_start)
+            if entity_end == -1:
+                n_failed += 1
+                continue
+        else:
+            entity_end = len(original_text)
+
+        entity_text = original_text[entity_start:entity_end].strip()
+        if entity_text:
+            entities.append(entity_text)
+            types.append(cat.strip())
+        else:
+            n_failed += 1
+
+        pos = entity_end
+
+    return entities, types, n_failed
+
+
+# ---------------------------------------------------------------------------
 # Document data extraction
 # ---------------------------------------------------------------------------
 
@@ -709,6 +790,23 @@ def extract_predictions(doc: Dict) -> Tuple[List[str], List[str], Dict]:
         if entities:
             return entities, types, meta
 
+    # --- Direct-anonymization format: **CATEGORY** (no identified_text) ----
+    # Detected when identified_text is absent/null but anonymized_text contains
+    # **CATEGORY** markers.  Entity texts are recovered by text alignment with
+    # the original (chunks.original_text).
+    original_text = chunks.get('original_text', '') or ''
+    anon_text_raw = anonymized_text  # already extracted above
+
+    if _PAT_DIRECT.search(anon_text_raw) and not _PAT.search(anon_text_raw):
+        entities, types, n_failed = _recover_entities_from_direct_anon(
+            original_text, anon_text_raw
+        )
+        meta['direct_format'] = True
+        if n_failed:
+            meta['direct_recovery_failed'] = n_failed
+        if entities:
+            return entities, types, meta
+
     # --- Fallback: explicit JSON lists ----------------------------------
     entities = chunks.get('entities_identified', []) or []
     types = chunks.get('entities_anonymized', []) or []
@@ -816,6 +914,7 @@ def evaluate_document(
     m2_fp = 0
     m2_type_errors = []  # For analysis: (entity, gt_type, pred_type)
     m2_cm_pairs: List[Tuple[str, str]] = []  # (gt_type, pred_type) for all matches
+    m2_by_type: Dict[str, MetricsResult] = defaultdict(MetricsResult)
 
     for pred_idx, gt_idx in m1_matches:
         gt_type = (gt_types[gt_idx] if gt_idx < len(gt_types) else 'UNKNOWN').upper()
@@ -827,8 +926,11 @@ def evaluate_document(
         m2_cm_pairs.append((gt_type, pred_type))
         if pred_type == gt_type:
             m2_tp += 1
+            m2_by_type[gt_type].tp += 1
         else:
             m2_fp += 1
+            m2_by_type[gt_type].fn += 1    # real type not predicted correctly
+            m2_by_type[pred_type].fp += 1  # wrong type was predicted
             m2_type_errors.append({
                 'entity': pred_entities[pred_idx] if pred_idx < len(pred_entities) else '',
                 'gt_type': gt_type,
@@ -950,6 +1052,7 @@ def evaluate_document(
         'm2': m2,
         'm3': m3,
         'm1_by_type': dict(m1_by_type),
+        'm2_by_type': dict(m2_by_type),
         'm3_by_type': dict(m3_by_type),
         'm2_type_errors': m2_type_errors,
         'gt_entities': gt_entities,
@@ -1003,6 +1106,7 @@ def evaluate_all(
     global_m2 = MetricsResult()
     global_m3 = MetricsResult()
     global_m1_by_type: Dict[str, MetricsResult] = defaultdict(MetricsResult)
+    global_m2_by_type: Dict[str, MetricsResult] = defaultdict(MetricsResult)
     global_m3_by_type: Dict[str, MetricsResult] = defaultdict(MetricsResult)
     global_m2_cm_pairs: List[Tuple[str, str]] = []  # for the M2 confusion matrix
     global_partial_pairs: List[Dict] = []             # for the partial match report
@@ -1127,6 +1231,10 @@ def evaluate_all(
                 setattr(global_m1_by_type[etype], attr,
                         getattr(global_m1_by_type[etype], attr) + getattr(mr, attr))
         if not anon_missing:
+            for etype, mr in result['m2_by_type'].items():
+                for attr in ('tp', 'fp', 'fn'):
+                    setattr(global_m2_by_type[etype], attr,
+                            getattr(global_m2_by_type[etype], attr) + getattr(mr, attr))
             for etype, mr in result['m3_by_type'].items():
                 for attr in ('tp', 'fp', 'fn'):
                     setattr(global_m3_by_type[etype], attr,
@@ -1200,6 +1308,7 @@ def evaluate_all(
         },
         'by_entity_type': {
             'm1': {etype: mr.to_dict() for etype, mr in sorted(global_m1_by_type.items())},
+            'm2': {etype: mr.to_dict() for etype, mr in sorted(global_m2_by_type.items())},
             'm3': {etype: mr.to_dict() for etype, mr in sorted(global_m3_by_type.items())},
         },
         'document_results': document_results,
