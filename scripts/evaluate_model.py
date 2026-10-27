@@ -42,6 +42,9 @@ DESIGN NOTES
   - Documents where anonymized_text is empty despite identified_text having
     spans (anon_text_missing) are counted in M1 but excluded from M2/M3
     to avoid penalising pipeline-level failures.
+  - With shared_matching (run_evaluation.py --shared-matching), M2 and M3 reuse
+    the M1 pairs, and UNKNOWN types and anon_text_missing documents count as
+    categorisation errors, so M1 + M2 errors = M3 errors exactly.
 """
 
 import json
@@ -146,6 +149,9 @@ class NormalizationConfig:
     partial_match_strategy: str = 'substring'  # 'substring' | 'sequence_matcher'
     partial_match_threshold: float = 0.6   # Minimum ratio for sequence_matcher [0, 1]
     partial_match_min_length: int = 3      # Min length on both sides for partial match
+    # Reuse the M1 pairs for M2 and M3 (UNKNOWN types and documents with missing
+    # anonymized_text count as categorisation errors), so M1 + M2 errors = M3 errors.
+    shared_matching: bool = False
 
 
 @dataclass
@@ -921,7 +927,8 @@ def evaluate_document(
         pred_type = (pred_types[pred_idx] if pred_idx < len(pred_types) else 'UNKNOWN').upper()
         # Spans with pred_type UNKNOWN are excluded from M2:
         # the alignment failure is already penalised in M3.
-        if pred_type == 'UNKNOWN':
+        # With shared_matching they count as categorisation errors instead.
+        if pred_type == 'UNKNOWN' and not config.shared_matching:
             continue
         m2_cm_pairs.append((gt_type, pred_type))
         if pred_type == gt_type:
@@ -956,34 +963,44 @@ def evaluate_document(
     pred_pair_matched = [False] * len(pred_pairs)
     m3_tp = 0
 
-    # Pass 1: exact match on both text AND type
-    for i, (p_text, p_type) in enumerate(pred_pairs):
-        for j, (g_text, g_type) in enumerate(gt_pairs):
-            if pred_pair_matched[i] or gt_pair_matched[j]:
-                continue
-            if p_text == g_text and p_type == g_type:
+    if config.shared_matching:
+        # Reuse the M1 pairs: an M1 pair with the right type is an M3 TP; a pair with
+        # the wrong (or UNKNOWN) type is an M3 FP + FN, exactly as in M2.
+        for pred_idx, gt_idx in m1_matches:
+            if pred_idx < len(pred_pairs) and gt_idx < len(gt_pairs) \
+                    and pred_pairs[pred_idx][1] == gt_pairs[gt_idx][1]:
                 m3_tp += 1
-                pred_pair_matched[i] = True
-                gt_pair_matched[j] = True
-                break
-
-    # Pass 2: substring match on text, exact match on type (if partial_match enabled)
-    if config.partial_match:
+                pred_pair_matched[pred_idx] = True
+                gt_pair_matched[gt_idx] = True
+    else:
+        # Pass 1: exact match on both text AND type
         for i, (p_text, p_type) in enumerate(pred_pairs):
-            if pred_pair_matched[i]:
-                continue
-            if len(p_text) < 3:
-                continue
             for j, (g_text, g_type) in enumerate(gt_pairs):
-                if gt_pair_matched[j]:
+                if pred_pair_matched[i] or gt_pair_matched[j]:
                     continue
-                if len(g_text) < 3:
-                    continue
-                if (p_text in g_text or g_text in p_text) and p_type == g_type:
+                if p_text == g_text and p_type == g_type:
                     m3_tp += 1
                     pred_pair_matched[i] = True
                     gt_pair_matched[j] = True
                     break
+
+        # Pass 2: substring match on text, exact match on type (if partial_match enabled)
+        if config.partial_match:
+            for i, (p_text, p_type) in enumerate(pred_pairs):
+                if pred_pair_matched[i]:
+                    continue
+                if len(p_text) < 3:
+                    continue
+                for j, (g_text, g_type) in enumerate(gt_pairs):
+                    if gt_pair_matched[j]:
+                        continue
+                    if len(g_text) < 3:
+                        continue
+                    if (p_text in g_text or g_text in p_text) and p_type == g_type:
+                        m3_tp += 1
+                        pred_pair_matched[i] = True
+                        gt_pair_matched[j] = True
+                        break
 
     m3_fp = sum(1 for m in pred_pair_matched if not m)
     m3_fn = sum(1 for m in gt_pair_matched if not m)
@@ -1192,6 +1209,8 @@ def evaluate_all(
         anon_missing = result['meta'].get('anon_text_missing', False)
         if anon_missing:
             counts['anon_text_missing'] += 1
+        # With shared_matching, documents with missing anonymized_text also count in M2/M3
+        include_m23 = not anon_missing or config.shared_matching
 
         if result['meta']['length_mismatch']:
             counts['length_mismatches'] += 1
@@ -1209,7 +1228,7 @@ def evaluate_all(
             _faith_anon_sum += _fa
             _faith_count_anon += 1
 
-        if not anon_missing:
+        if include_m23:
             global_m2_cm_pairs.extend(result['m2_cm_pairs'])
 
         # Aggregate partial pairs with document name for traceability
@@ -1220,7 +1239,7 @@ def evaluate_all(
         # M2 and M3 are skipped for documents with missing anonymized_text
         for attr in ('tp', 'fp', 'fn', 'partial'):
             setattr(global_m1, attr, getattr(global_m1, attr) + getattr(result['m1'], attr))
-        if not anon_missing:
+        if include_m23:
             for attr in ('tp', 'fp', 'fn', 'partial'):
                 setattr(global_m2, attr, getattr(global_m2, attr) + getattr(result['m2'], attr))
                 setattr(global_m3, attr, getattr(global_m3, attr) + getattr(result['m3'], attr))
@@ -1230,7 +1249,7 @@ def evaluate_all(
             for attr in ('tp', 'fp', 'fn'):
                 setattr(global_m1_by_type[etype], attr,
                         getattr(global_m1_by_type[etype], attr) + getattr(mr, attr))
-        if not anon_missing:
+        if include_m23:
             for etype, mr in result['m2_by_type'].items():
                 for attr in ('tp', 'fp', 'fn'):
                     setattr(global_m2_by_type[etype], attr,
@@ -1242,11 +1261,11 @@ def evaluate_all(
 
         # Aggregate per-language metrics
         lang = language_map.get(namefile, 'unknown')
-        if not anon_missing:
+        if include_m23:
             lang_m2_cm_pairs[lang].extend(result['m2_cm_pairs'])
         for attr in ('tp', 'fp', 'fn', 'partial'):
             setattr(lang_m1[lang], attr, getattr(lang_m1[lang], attr) + getattr(result['m1'], attr))
-        if not anon_missing:
+        if include_m23:
             for attr in ('tp', 'fp', 'fn', 'partial'):
                 setattr(lang_m2[lang], attr, getattr(lang_m2[lang], attr) + getattr(result['m2'], attr))
                 setattr(lang_m3[lang], attr, getattr(lang_m3[lang], attr) + getattr(result['m3'], attr))

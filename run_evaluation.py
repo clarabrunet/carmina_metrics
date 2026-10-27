@@ -264,6 +264,9 @@ def main():
                         help='Disable partial/substring matching')
     parser.add_argument('--partial-match-threshold', type=float, default=0.6,
                         help='SequenceMatcher threshold for partial matching [0-1] (default: 0.6)')
+    parser.add_argument('--shared-matching', action='store_true',
+                        help='Reuse the M1 pairs for M2 and M3 so that M1 + M2 errors = M3 errors '
+                             '(UNKNOWN types and missing anonymized_text count as categorisation errors)')
     parser.add_argument('--verbose', action='store_true',
                         help='Show per-language and per-entity-type breakdown')
     args = parser.parse_args()
@@ -282,11 +285,13 @@ def main():
         normalize_case=True,
         partial_match=not args.no_partial_match,
         partial_match_threshold=args.partial_match_threshold,
+        shared_matching=args.shared_matching,
     )
 
     print(f"\nMatching configuration:")
     print(f"  normalize_case  : True (strip + lowercase)")
     print(f"  partial_match   : {config.partial_match}")
+    print(f"  shared_matching : {config.shared_matching}")
     if not args.no_partial_match:
         print(f"  partial_match_threshold: {config.partial_match_threshold}")
 
@@ -390,6 +395,7 @@ def main():
                 'matching_config': {
                     'normalize_case': config.normalize_case,
                     'partial_match': config.partial_match,
+                    'shared_matching': config.shared_matching,
                 },
                 'counts': counts,
                 'global': g,
